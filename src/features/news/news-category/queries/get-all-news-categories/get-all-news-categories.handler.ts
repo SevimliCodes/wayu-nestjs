@@ -1,6 +1,6 @@
 import {plainToInstance} from "class-transformer";
 
-import {NewsCategory} from "@/features/news/news-category/news-category.entity";
+import {NewsCategory } from "../../news-category.entity";
 import {GetAllNewsCategoriesQuery} from "./get-all-news-categories.query";
 import {GetAllNewsCategoriesResponse} from "./get-all-news-categories.response";
 import type {IQueryHandler} from "@nestjs/cqrs";

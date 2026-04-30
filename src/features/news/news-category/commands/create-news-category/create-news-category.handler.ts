@@ -1,6 +1,6 @@
 import {CreateNewsCategoryCommand} from './create-news-category.command';
 import {CreateNewsCategoryResponse} from './create-news-category.response';
-import {NewsCategory} from "@/features/news/news-category/news-category.entity";
+import {NewsCategory } from "../../news-category.entity";
 import {ILike} from "typeorm";
 import {BadRequestException} from "@nestjs/common";
 import {plainToInstance} from "class-transformer";
