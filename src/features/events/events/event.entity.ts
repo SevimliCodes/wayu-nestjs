@@ -1,51 +1,36 @@
-import { Column, Entity } from 'typeorm';
-import { BaseModel } from '@/core/base-model';
-
-export enum EventType {
-  CONFERENCE = 'conference',
-  ONLINE = 'online',
-  OFFLINE = 'offline',
-}
-
-export enum EventStatus {
-  UPCOMING = 'upcoming',
-  ONGOING = 'ongoing',
-  DONE = 'done',
-  CANCELLED = 'cancelled',
-}
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { EventCategory} from "@/features/events/event-category/event-category.entity";
 
 @Entity('events')
-export class Event extends BaseModel {
-  @Column({ length: 300 })
-  titleUz!: string;
+export class Event {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 300, nullable: true })
-  titleRu?: string;
+  @Column()
+  categoryId: number;
 
-  @Column({ type: 'text', nullable: true })
-  descriptionUz?: string;
+  @ManyToOne(() => EventCategory, (cat) => cat.events, { onDelete: 'RESTRICT' })
+  @JoinColumn({ name: 'categoryId' })
+  category: EventCategory;
 
-  @Column({ type: 'text', nullable: true })
-  descriptionRu?: string;
+  @Column({ type: 'varchar', length: 256 })
+  title: string;
 
-  @Column({ length: 256, nullable: true })
-  coverUrl?: string;
+  @Column({ type: 'text' })
+  content: string;
 
-  @Column({ type: 'enum', enum: EventType })
-  eventType!: EventType;
+  @Column({ type: 'varchar', length: 128 })
+  image: string;
 
-  @Column({ length: 5, nullable: true })
-  countryCode?: string;
+  @Column({ type: 'timestamp' })
+  date: Date;
 
-  @Column({ length: 80, nullable: true })
-  city?: string;
-
-  @Column({ type: 'timestamptz' })
-  startsAt!: string;
-
-  @Column({ type: 'timestamptz', nullable: true })
-  endsAt?: string;
-
-  @Column({ type: 'enum', enum: EventStatus, default: EventStatus.UPCOMING })
-  status!: EventStatus;
+  @Column({ type: 'varchar', length: 128 })
+  address: string;
 }

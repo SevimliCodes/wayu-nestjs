@@ -1,8 +1,14 @@
-import {BaseModel} from "@/core/base-model";
-import {Column, Entity} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Event} from "@/features/events/events/event.entity";
 
-@Entity('event-category')
-export class EventCategory extends BaseModel {
-    @Column({length: 64, unique: true})
-    title!: string;
+@Entity('event_categories')
+export class EventCategory {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({ type: 'varchar', length: 64, unique: true })
+    title: string;
+
+    @OneToMany(() => Event, (event) => event.category)
+    events: Event[];
 }

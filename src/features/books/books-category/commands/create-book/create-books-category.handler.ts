@@ -5,7 +5,7 @@ import {CommandHandler, ICommandHandler} from "@nestjs/cqrs";
 import {CreateBookCommand} from "@/features/books/books-category/commands/create-book/create-book.command";
 import {CreateBookResponse} from "@/features/books/books-category/commands/create-book/create-book.response";
 import {BooksCategoryController} from "@/features/books/books-category/books-category.controller";
-import {BooksCategory} from "@/features/books/books-category/books-category.entity";
+import {BooksCategory} from "@/features/books/books-category/book-category.entity";
 
 @CommandHandler(CreateBookCommand)
 export class CreateBooksCategoryHandler implements ICommandHandler<CreateBookCommand> {

@@ -1,14 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { News} from "@/features/news/news/news.entity";
+import { Book} from "@/features/books/books/book.entity";
 
-@Entity('news_categories')
-export class NewsCategory {
+@Entity('book_categories')
+export class BookCategory {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', length: 64, unique: true })
   title: string;
 
-  @OneToMany(() => News, (news) => news.category)
-  news: News[];
+  @OneToMany(() => Book, (book) => book.category)
+  books: Book[];
 }

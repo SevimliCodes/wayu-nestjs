@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum QuestionStatus {
     PENDING = 'pending',
@@ -24,7 +24,7 @@ export class Question {
     @Column({
         type: 'enum',
         enum: QuestionStatus,
-        default: QuestionStatus.PENDING
+        default: QuestionStatus.PENDING,
     })
     status: QuestionStatus;
 }

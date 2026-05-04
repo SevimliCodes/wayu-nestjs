@@ -1,14 +1,20 @@
-import {Column, Entity, OneToMany} from 'typeorm';
-import { BaseModel } from '@/core/base-model';
-import {Branch} from "@/features/branches/branches.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { News} from "@/features/news/news/news.entity";
+import { Branch} from "@/features/branches/branch.entity";
 
-@Entity('country')
-export class CountryEntity extends BaseModel{
-  @Column({length: 64, unique: true})
-  title!: string;
+@Entity('countries')
+export class Country {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 128, unique: true})
-  flag!: string;
+  @Column({ type: 'varchar', length: 64, unique: true })
+  title: string;
+
+  @Column({ type: 'varchar', length: 128 })
+  flag: string;
+
+  @OneToMany(() => News, (news) => news.country)
+  news: News[];
 
   @OneToMany(() => Branch, (branch) => branch.country)
   branches: Branch[];

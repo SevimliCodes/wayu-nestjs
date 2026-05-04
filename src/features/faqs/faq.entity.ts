@@ -1,12 +1,11 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
-    ManyToMany,
+    Entity,
     JoinTable,
+    ManyToMany,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
-import {Tag} from "@/features/faqs/faqsTags/tag.entity";
-
+import { Tag} from "@/features/tags/tag.entity";
 
 @Entity('faqs')
 export class Faq {
@@ -21,15 +20,9 @@ export class Faq {
 
     @ManyToMany(() => Tag, (tag) => tag.faqs)
     @JoinTable({
-        name: 'faqsTags',
-        joinColumn: {
-            name: 'faqsId',
-            referencedColumnName: 'id',
-        },
-        inverseJoinColumn: {
-            name: 'tagId',
-            referencedColumnName: 'id',
-        },
+        name: 'faqs_tags',
+        joinColumn: { name: 'faqsId', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'tagId', referencedColumnName: 'id' },
     })
     tags: Tag[];
 }

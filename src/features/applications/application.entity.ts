@@ -1,6 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from 'typeorm';
-import {Vacancy} from "@/features/vacancies/vacancy.entity";
-
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Vacancy} from "@/features/vacancies/vacancy.entity";
 
 export enum ApplicationStatus {
     ACTIVE = 'active',
@@ -25,11 +30,11 @@ export class Application {
     @Column()
     vacancyId: number;
 
-    @ManyToOne(
-        () => require('../vacancies/entities/vacancy.entity').Vacancy,
-        (vacancy: { applications: any; }) => vacancy.applications,
-    )
-    vacancy: any;
+    @ManyToOne(() => Vacancy, (vacancy) => vacancy.applications, {
+        onDelete: 'RESTRICT',
+    })
+    @JoinColumn({ name: 'vacancyId' })
+    vacancy: Vacancy;
 
     @Column({ type: 'varchar', length: 128 })
     resume: string;

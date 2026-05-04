@@ -1,53 +1,37 @@
-import {Column, Entity, OneToMany} from 'typeorm';
-import { BaseModel } from '@/core/base-model';
-import {Application} from "@/features/applications/application.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Application} from "@/features/applications/application.entity";
 
-export enum VacancySchedule {
-  FULL = 'full',
-  HALF = 'half',
-  REMOTE = 'remote',
-}
-
-export enum VacancyStatus {
-  OPEN = 'open',
-  CLOSED = 'closed',
+export enum VacancyType {
+  FULL_TIME = 'fullTime',
+  PART_TIME = 'partTime',
 }
 
 @Entity('vacancies')
-export class Vacancy extends BaseModel {
-  @Column({ length: 200 })
-  titleUz!: string;
+export class Vacancy {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 200, nullable: true })
-  titleRu?: string;
+  @Column({ type: 'varchar', length: 256 })
+  title: string;
 
-  @Column({ type: 'text', nullable: true })
-  descriptionUz?: string;
+  @Column({ type: 'varchar', length: 128 })
+  address: string;
 
-  @Column({ type: 'text', nullable: true })
-  descriptionRu?: string;
+  @Column({ type: 'text' })
+  description: string;
 
-  @Column({ length: 100, nullable: true })
-  locationUz?: string;
+  @Column({ type: 'varchar', length: 16 })
+  phoneNumber: string;
 
-  @Column({ length: 5, nullable: true })
-  countryCode?: string;
+  @Column({ type: 'enum', enum: VacancyType })
+  type: VacancyType;
 
-  @Column({ nullable: true })
-  salaryMin?: number;
+  @Column({ type: 'varchar', length: 64 })
+  salary: string;
 
-  @Column({ nullable: true })
-  salaryMax?: number;
+  @Column({ type: 'boolean', default: true })
+  isActive: boolean;
 
-  @Column({ length: 60, nullable: true })
-  salaryText?: string;
-
-  @Column({ type: 'enum', enum: VacancySchedule })
-  schedule!: VacancySchedule;
-
-  @Column({ type: 'enum', enum: VacancyStatus, default: VacancyStatus.OPEN })
-  status!: VacancyStatus;
-
-  @OneToMany(() => Application, (application) => application.vacancy)
+  @OneToMany(() => Application, (app) => app.vacancy)
   applications: Application[];
 }

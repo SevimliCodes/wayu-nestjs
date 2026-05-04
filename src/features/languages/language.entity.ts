@@ -1,8 +1,10 @@
-import { BaseModel } from '@/core/base-model';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('language-entity')
-export class LanguageEntity extends BaseModel {
-  @Column({ length: 64, unique: true})
-  title!: string;
+@Entity('languages')
+export class Language {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: 'varchar', length: 64 })
+  title: string;
 }

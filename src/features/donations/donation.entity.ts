@@ -1,20 +1,28 @@
-import { BaseModel } from '@/core/base-model';
-import { Entity, Column } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+export enum PaymentProvider {
+  PAYME = 'payme',
+  CLICK = 'click',
+  OSON = 'oson',
+}
 
 @Entity('donations')
-export class DonationEntity extends BaseModel {
-  @Column({type: 'decimal', unique: true})
-  amount!: number;
+export class Donation {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({type: 'timestamp', unique: true})
-  date!: Date;
+  @Column({ type: 'decimal', precision: 12, scale: 2 })
+  amount: number;
 
-  @Column({length: 256, unique: true})
-  title!: string;
+  @Column({ type: 'timestamp' })
+  date: Date;
 
-  @Column({type: 'text', nullable: true})
-  description?: string;
+  @Column({ type: 'varchar', length: 256 })
+  title: string;
 
-  @Column({length: 64, unique: true})
-  transactionId!: string;
+  @Column({ type: 'text', nullable: true })
+  description: string | null;
+
+  @Column({ type: 'varchar', length: 64 })
+  transactionId: string;
 }
