@@ -1,45 +1,41 @@
 import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Country} from "@/features/countries/country.entity";
-import { Representative} from "@/features/representatives/representative.entity";
+import { Representative } from '../representatives/representative.entity';
 
 @Entity('branches')
-export class Branch {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class BranchEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    countryId: number;
+  @Column({ name: 'country_id' })
+  countryId: number;
 
-    @ManyToOne(() => Country, (country) => country.branches, {
-        onDelete: 'RESTRICT',
-    })
-    @JoinColumn({ name: 'countryId' })
-    country: Country;
+  @Column({ name: 'representative_id' })
+  representativeId: number;
 
-    @Column()
-    representativeId: number;
+  @Column({ type: 'varchar', length: 64 })
+  city: string;
 
-    @ManyToOne(() => Representative, (rep) => rep.branches, {
-        onDelete: 'RESTRICT',
-    })
-    @JoinColumn({ name: 'representativeId' })
-    representative: Representative;
+  @Column({ type: 'decimal', precision: 10, scale: 7 })
+  latitude: number;
 
-    @Column({ type: 'varchar', length: 64 })
-    city: string;
+  @Column({ type: 'decimal', precision: 10, scale: 7 })
+  longitude: number;
 
-    @Column({ type: 'decimal', precision: 10, scale: 7 })
-    latitude: number;
+  @Column({ name: 'phone_number', type: 'varchar', length: 16 })
+  phoneNumber: string;
 
-    @Column({ type: 'decimal', precision: 10, scale: 7 })
-    longitude: number;
+  @ManyToOne(() => Country, { onDelete: 'RESTRICT', eager: false })
+  @JoinColumn({ name: 'country_id' })
+  country: Country;
 
-    @Column({ type: 'varchar', length: 16 })
-    phoneNumber: string;
+  @ManyToOne(() => Representative, { onDelete: 'RESTRICT', eager: false })
+  @JoinColumn({ name: 'representative_id' })
+  representative: Representative;
 }

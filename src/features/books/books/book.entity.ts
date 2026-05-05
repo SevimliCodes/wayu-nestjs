@@ -1,12 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Author} from "@/features/authors/author.entity";
-import { BookCategory} from "@/features/books/books-category/book-category.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { AuthorEntity } from "@/features/authors/author.entity";
+import type { BookCategory } from "@/features/books/books-category/book-category.entity"; // type-only
 
 @Entity('books')
 export class Book {
@@ -16,14 +10,14 @@ export class Book {
   @Column()
   authorId: number;
 
-  @ManyToOne(() => Author, (author) => author.books, { onDelete: 'RESTRICT' })
+  @ManyToOne(() => AuthorEntity, (author) => author.books, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'authorId' })
-  author: Author;
+  author: AuthorEntity;
 
   @Column()
   categoryId: number;
 
-  @ManyToOne(() => BookCategory, (cat) => cat.books, { onDelete: 'RESTRICT' })
+  @ManyToOne(() => BookCategory, (cat) => cat.books)
   @JoinColumn({ name: 'categoryId' })
   category: BookCategory;
 

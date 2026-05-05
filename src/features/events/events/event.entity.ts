@@ -1,23 +1,25 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { EventCategory} from "@/features/events/event-category/event-category.entity";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+export enum EventType {
+  ONLINE  = 'online',
+  OFFLINE = 'offline',
+  HYBRID  = 'hybrid',
+}
+
+export enum EventStatus {
+  UPCOMING  = 'upcoming',
+  ONGOING   = 'ongoing',
+  COMPLETED = 'completed',
+  CANCELLED = 'cancelled',
+}
 
 @Entity('events')
-export class Event {
+export class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'category_id' })
   categoryId: number;
-
-  @ManyToOne(() => EventCategory, (cat) => cat.events, { onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'categoryId' })
-  category: EventCategory;
 
   @Column({ type: 'varchar', length: 256 })
   title: string;
@@ -33,4 +35,22 @@ export class Event {
 
   @Column({ type: 'varchar', length: 128 })
   address: string;
+
+  @Column({
+    type: 'enum',
+    enum: EventType,
+    default: EventType.OFFLINE,
+  })
+  type: EventType;
+
+  @Column({
+    type: 'enum',
+    enum: EventStatus,
+    default: EventStatus.UPCOMING,
+  })
+  status: EventStatus;
+
+  @ManyToOne('EventCategory', (cat: any) => cat.events, { onDelete: 'RESTRICT' })
+  @JoinColumn({ name: 'category_id' })
+  category: any;
 }

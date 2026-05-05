@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Branch} from "@/features/branches/branch.entity";
+import { BranchEntity} from "@/features/branches/branch.entity";
 
 @Entity('representatives')
 export class Representative {
@@ -21,6 +21,6 @@ export class Representative {
   @Column({ type: 'text' })
   resume: string;
 
-  @OneToMany(() => Branch, (branch) => branch.representative)
-  branches: Branch[];
+  @OneToMany(() => BranchEntity, (branch) => branch.representative)
+  branches: BranchEntity[];
 }
